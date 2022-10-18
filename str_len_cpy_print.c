@@ -29,22 +29,19 @@ unsigned int _strlen(char *str)
 */
 void _strcpy(char *str1, char *str2)
 {
-	unsigned int i;
+	unsigned int i = 0;
 
 	if (str1 == NULL)
 	{
 		str2 = NULL;
+		return;
 	}
-	else
+	else 
 	{
-		if (str2 == NULL)
-			return;
-		for (i = 0; i <= _strlen(str1); i++)
-		{
+		for (; i <= _strlen(str1); i++)
 			str2[i] = str1[i];
-		}
 		str2[i] = '\0';
-	}
+	} 
 }
 
 /**
@@ -58,11 +55,13 @@ void print_str(char *str)
 	unsigned int i = 0;
 
 	if (str == NULL)
-		return;
+		{
+			print_str("(null)");
+			return;
+		}
 	while (str[i] != '\0')
 	{
 		_putchar(str[i]);
 		i++;
 	}
-	return;
 }

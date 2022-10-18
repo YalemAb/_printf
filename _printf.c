@@ -12,12 +12,13 @@ int _printf(const char *format, ...)
 {
 	char *for_tmp;
 	unsigned int len, i, counter;
+	int tmp;
 	va_list ap, save;
 
 	len = _strlen((char *)format);
 	for_tmp = malloc(len + 1);
 	if (for_tmp == NULL)
-		return (-1);
+		return (0);
 	_strcpy((char *)format, for_tmp);
 	if (for_tmp == NULL)
 		return (0);
@@ -40,11 +41,26 @@ int _printf(const char *format, ...)
 				print_str(va_arg(ap, char*));
 				counter += _strlen(va_arg(save, char*));
 				i += 1;
+				va_end(save);
 			}
 			else if (for_tmp[i] == '%')
 			{
 				_putchar('%');
 				counter += 1;
+				i += 1;
+			}
+			else if (for_tmp[i] == 'd')
+			{
+				tmp = va_arg(ap, int);
+				print_ndigit(tmp, n_digit(tmp));
+				counter += n_digit(tmp);
+				i += 1;
+			}
+			else if (for_tmp[i] == 'i')
+			{
+				tmp = va_arg(ap, int);
+				print_ndigit(tmp, n_digit(tmp));
+				counter += n_digit(tmp);
 				i += 1;
 			}
 			else
