@@ -38,7 +38,7 @@ int _printf(const char *format, ...)
 			{
 				va_copy(save, ap);
 				print_str(va_arg(ap, char*));
-			/**	counter += _strlen(va_arg(save, char*));*/
+				counter += _strlen(va_arg(save, char*));
 				i += 1;
 			}
 			else if (for_tmp[i] == '%')
