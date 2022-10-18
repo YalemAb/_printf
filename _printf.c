@@ -17,7 +17,7 @@ int _printf(const char *format, ...)
 	len = _strlen((char *)format);
 	for_tmp = malloc(len + 1);
 	if (for_tmp == NULL)
-		return (-1); 
+		return (-1);
 	_strcpy((char *)format, for_tmp);
 	if (for_tmp == NULL)
 		return (0);
@@ -32,17 +32,19 @@ int _printf(const char *format, ...)
 			{
 				_putchar(va_arg(ap, int));
 				counter += 1;
+				i += 1;
 			}
 			else if (for_tmp[i] == 's')
 			{
 				va_copy(save, ap);
 				s_tmp = malloc(_strlen(va_arg(ap, char*)) + 1);
 				if (for_tmp == NULL)
-					return (-1); 
+					return (-1); \
 				_strcpy(va_arg(save, char*), s_tmp);
 				va_end(save);
 				print_str(s_tmp);
 				counter += _strlen(s_tmp);
+				i += 1;
 				free(s_tmp);
 			}
 			else if (for_tmp[i] == '%')
