@@ -4,7 +4,7 @@
 
 /**
 * _printf - prints a character string with embedded arguments
-* @format: The format string
+* @format: The format string to be printed
 *
 * Return: number of characters printed, excluding the null byte
 */
@@ -39,7 +39,7 @@ int _printf(const char *format, ...)
 				va_copy(save, ap);
 				s_tmp = malloc(_strlen(va_arg(ap, char*)) + 1);
 				if (for_tmp == NULL)
-					return (-1); \
+					return (-1);
 				_strcpy(va_arg(save, char*), s_tmp);
 				va_end(save);
 				print_str(s_tmp);
@@ -51,11 +51,11 @@ int _printf(const char *format, ...)
 			{
 				_putchar('%');
 				counter += 1;
+				i += 1;
 			}
 			else
 			{
 				_putchar('%');
-				_putchar(for_tmp[i]);
 			}
 		}
 		_putchar(for_tmp[i]);
