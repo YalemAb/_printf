@@ -5,6 +5,7 @@
 *
 * Return: Number of digits in integer x
 */
+
 int n_digit(int x)
 {
 	int counter = 0;
@@ -23,6 +24,7 @@ int n_digit(int x)
 		return (counter);
 	}
 }
+
 /**
 * print_ndigit -  prints an n digit integer number using _putchar function
 * @x: Number to be printed
@@ -30,6 +32,7 @@ int n_digit(int x)
 *
 * Return: Nothing
 */
+
 void print_ndigit(int x, int n)
 {
 	int i, tmp, _10n;
@@ -54,4 +57,18 @@ void print_ndigit(int x, int n)
 		_10n /= 10;
 	}
 	_putchar('0' + x);
+}
+
+/**
+* sign_check -  checks sign of an integer number
+* @x: Number to be checked
+*
+* Return: 0 if number is positver or zero, 1 if number is negative
+*/
+
+int sign_check(int x)
+{
+	if (x < 0)
+		return (1);
+	return (0);
 }

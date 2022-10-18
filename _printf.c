@@ -1,7 +1,7 @@
 #include "main.h"
 #include <stdlib.h>
 #include <stdarg.h>
-
+#include <stdio.h>
 /**
 * _printf - prints a character string with embedded arguments
 * @format: The format string to be printed
@@ -10,72 +10,77 @@
 */
 int _printf(const char *format, ...)
 {
-	char *for_tmp;
-	unsigned int len, i, counter;
-	int tmp;
-	va_list ap, save;
+	unsigned int len, i, counter, tmp_count;
+	va_list ap;
 
+	if (format == NULL)
+		return (-1);
 	len = _strlen((char *)format);
-	for_tmp = malloc(len + 1);
-	if (for_tmp == NULL)
-		return (0);
-	_strcpy((char *)format, for_tmp);
-	if (for_tmp == NULL)
-		return (0);
 	va_start(ap, format);
 	counter = 0;
 	for (i = 0; i < len; i++)
 	{
-		if (for_tmp[i] == '%')
+		if (format[i] == '%')
 		{
 			++i;
-			if (for_tmp[i] == 'c')
-			{
-				_putchar(va_arg(ap, int));
-				counter += 1;
+			tmp_count = counter;
+			counter += specifier_handler(format[i], ap);
+			if (!(counter == tmp_count && format[i] != 's'))
 				i += 1;
-			}
-			else if (for_tmp[i] == 's')
-			{
-				va_copy(save, ap);
-				print_str(va_arg(ap, char*));
-				counter += _strlen(va_arg(save, char*));
-				i += 1;
-				va_end(save);
-			}
-			else if (for_tmp[i] == '%')
-			{
-				_putchar('%');
-				counter += 1;
-				i += 1;
-			}
-			else if (for_tmp[i] == 'd')
-			{
-				tmp = va_arg(ap, int);
-				print_ndigit(tmp, n_digit(tmp));
-				counter += n_digit(tmp);
-				i += 1;
-			}
-			else if (for_tmp[i] == 'i')
-			{
-				tmp = va_arg(ap, int);
-				print_ndigit(tmp, n_digit(tmp));
-				counter += n_digit(tmp);
-				i += 1;
-			}
-			else
-			{
-				_putchar('%');
-			}
 		}
-		_putchar(for_tmp[i]);
+		_putchar(format[i]);
 		counter += 1;
 	}
 	va_end(ap);
-	free(for_tmp);
 	return (counter);
 }
 
+/**
+* specifier_handler - handles special specifiers for _printf function
+* @spec: the specifier
+* @ap: list to _printf arguments
+*
+* Return: number of characters printed, excluding the null byte
+*/
+int specifier_handler(char spec, va_list ap)
+{
+	va_list save;
+	int tmp, count = 0;
 
+	if (spec == 'c')
+	{
+		_putchar(va_arg(ap, int));
+		count = 1;
+	}
+	else if (spec == 's')
+	{
+		va_copy(save, ap);
+		print_str(va_arg(ap, char*));
+		count = _strlen(va_arg(save, char*));
+		va_end(save);
+	}
+	else if (spec == '%')
+	{
+		_putchar('%');
+		count = 1;
+	}
+	else if (spec == 'd')
+	{
+		tmp = va_arg(ap, int);
+		print_ndigit(tmp, n_digit(tmp));
+		count = n_digit(tmp) + sign_check(tmp);
+	}
+	else if (spec == 'i')
+	{
+		tmp = va_arg(ap, int);
+		print_ndigit(tmp, n_digit(tmp));
+		count = n_digit(tmp) + sign_check(tmp);
+	}
+	else
+	{
+		_putchar('%');
+	}
+	return (count);
+}
 
 
