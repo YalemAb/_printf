@@ -56,7 +56,10 @@ int specifier_handler(char spec, va_list ap)
 	{
 		va_copy(save, ap);
 		print_str(va_arg(ap, char*));
-		count = _strlen(va_arg(save, char*));
+		if (va_arg(save, char *) == NULL)
+			count = _strlen("(null)");
+		else
+			count = _strlen(va_arg(save, char*));
 		va_end(save);
 	}
 	else if (spec == '%')
